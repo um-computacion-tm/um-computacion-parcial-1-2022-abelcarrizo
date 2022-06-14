@@ -3,7 +3,7 @@ from unittest.mock import patch
 from parameterized import parameterized
 
 from hangman import Hangman
-from invalidassignmentexception import InvalidAssignmentException
+#from invalidassignmentexception import InvalidAssignmentException
 
 
 class TestHangman(unittest.TestCase):
@@ -13,20 +13,24 @@ class TestHangman(unittest.TestCase):
                            ('computacion', 'Lifes: 5 - Word: _ _ _ _ _ _ _ _ _ _ _ ')])
     def test_show(self, word, display):
         hangman = Hangman()
-        hangman.set_word(word)
+        hangman.setWord(word)
         self.assertEqual(hangman.show(), display)
 
+    
     @parameterized.expand([('programacion', ['p', 'a', 'o'], 'Lifes: 5 - Word: p _ o _ _ a _ a _ _ o _ '),
                            ('avion', ['a', 'v', 'n'],
                             'Lifes: 5 - Word: a v _ _ n '),
                            ('camion', ['c', 'm', 'n'], 'Lifes: 5 - Word: c _ m _ _ n ')])
+    
+    
     def test_assign(self, word, tries, display):
         hangman = Hangman()
-        hangman.set_word(word)
+        hangman.setWord(word)
         for letter in tries:
             hangman.assign(letter)
         self.assertEqual(hangman.show(), display)
 
+    
     @parameterized.expand([('programacion', ['p', 'a', 'z']),
                            ('merienda', ['b', 'b']),
                            ('academia', ['a', 'a', 'a', 'a', 'a', 'f', 'f', 'f'])])
@@ -36,6 +40,7 @@ class TestHangman(unittest.TestCase):
         with self.assertRaises(InvalidAssignmentException):
             for letter in tries:
                 hangman.assign(letter)
+
 
     @parameterized.expand([('inalambrica', ['p', 'a', 'z'], 3),
                            ('caprese', ['i', 'i'], 3),
@@ -81,7 +86,6 @@ class TestHangman(unittest.TestCase):
         hangman = Hangman()
         hangman.set_word('horno')
         self.assertEqual(hangman.play(), 'Perdiste')
-
 
 if __name__ == '__main__':
     unittest.main()
